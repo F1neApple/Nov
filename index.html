@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css.css" />
+    <title>apa yaa</title>
+  </head>
+
+  <body>
+    <div class="container">
+      <p id="text">Hallo</p>
+      <div id="button-container"></div>
+    </div>
+    <button class="skip-btn" onclick="window.location.href='gameboy-main/gameboy.html'">Skip >></button>
+    <script>
+      const steps = [
+        { text: "Halloow", button: "Hi" },
+        { text: "Hi", button: "Hallo" },
+        { text: "Hallo Lagi", button: "???" },
+        { text: "Di pojok kiri atas ada tombol skip", button: "Terus?" },
+        {
+          text: "Tolong jangan dipencet dulu yaaa, PLEASEEE",
+          button: "Kenapa?",
+        },
+        { text: "Kecuali kalo kamu udah baca semua ini :p", button: "Oke" },
+        { text: "Hehe apa kabar kak???", button: ["Baikkk :)", "Nggaa :("] },
+        {
+          text: "Apapun jawabannya, semoga kamu tetep baik baik aja yaaa sampe kapan pun itu",
+          button: "Iyaa, Aamiin",
+        },
+        { text: "Oh iya ga kerasa udah November", button: "Emang" },
+        { text: "Ada yang nambah umur nih", button: "Siapa?" },
+        { text: "🤔", button: "?" },
+        { text: "😮", button: "??" },
+        { text: "😱", button: "???" },
+        { text: "HAHAHAHA umur kita beda setahun lagi deh", button: "Terus?" },
+        { text: "Aku ada sesuatu buat kamu", button: "Apa tuh?" },
+        {
+          text: "Ga seberapa sih, aku bingung mau ngasih apa ke kamu",
+          button: "Oke",
+        },
+        { text: "Jadi aku buatin ini aja deh", button: "Buatin apa?" },
+        { text: "Meskipun ga 100% aku yang buat", button: "Iya okee" },
+        { text: "Tahun lalu aku cuman ngasih ucapan kan?", button: "Iya sih" },
+        {
+          text: "Maaf yaa karna waktu itu emang lagi hectic banget 😵",
+          button: "Iyaa gapapa",
+        },
+        {
+          text: "Yaaa ini ucapan juga sih jatuhnya, cuman agak beda sedikit aja hehe :p",
+          button: "???",
+        },
+        {
+          text: "Aku harap ini bisa membuat kamu seneng (meskipun sedikit)",
+          button: "???",
+        },
+        { text: "Apakah kamu ready???", button: "Redi." },
+        { text: "Oke hitung yaa", button: "Oke" },
+        { text: "1", button: "" },
+        {
+          text: "2",
+          button: "",
+        },
+        { text: "2", button: "" },
+        { text: "2", button: "" },
+        { text: "2", button: "" },
+        { text: "2", button: "" },
+        { text: "HEHEHE OKE SERIUS", button: "CUH" },
+        {
+          text: "Oke ini dia, Silahkan klik button dibawah ya kak <3",
+          button: "Lanjut",
+        },
+      ];
+
+      let current = 0;
+      const textEl = document.getElementById("text");
+      const buttonContainer = document.getElementById("button-container");
+
+      function renderStep() {
+        const step = steps[current];
+        textEl.textContent = step.text;
+        buttonContainer.innerHTML = "";
+
+        if (Array.isArray(step.button)) {
+          const group = document.createElement("div");
+          group.classList.add("btn-group");
+
+          step.button.forEach((choice) => {
+            const btn = document.createElement("button");
+            btn.textContent = choice;
+            btn.classList.add("my-btn");
+            btn.addEventListener("click", () => handleChoice(choice));
+            group.appendChild(btn);
+          });
+
+          buttonContainer.appendChild(group);
+        } else {
+          const btn = document.createElement("button");
+          btn.textContent = step.button;
+          btn.classList.add("my-btn");
+          btn.addEventListener("click", nextStep);
+          buttonContainer.appendChild(btn);
+        }
+      }
+
+      function handleChoice(choice) {
+        buttonContainer.innerHTML = "";
+
+        if (choice === "Baikkk :)") {
+          textEl.textContent = "ALHAMDULILLAH, aku ikut seneng kalo begitu 😮";
+        } else {
+          textEl.textContent =
+            "YAHHHH :<, aku harap kamu tetep kuat dan bangkit lagi yaa 😢";
+        }
+
+        const nextBtn = document.createElement("button");
+        nextBtn.textContent = "Yeaah, Makasih yaa";
+        nextBtn.classList.add("my-btn");
+        nextBtn.addEventListener("click", nextStep);
+
+        buttonContainer.appendChild(nextBtn);
+      }
+
+      function nextStep() {
+        const step = steps[current];
+        if (step.text.includes("Oke ini dia")) {
+          window.location.href = "gameboy-main/gameboy.html";
+          return;
+        }
+        current++;
+        if (current < steps.length) {
+          renderStep();
+        }
+      }
+
+      renderStep();
+    </script>
+  </body>
+</html>
